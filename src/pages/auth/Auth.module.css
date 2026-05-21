@@ -1,0 +1,34 @@
+.authPage {
+  min-height: 100vh; display: flex; align-items: center; justify-content: center;
+  background: linear-gradient(135deg, #0c1730 0%, #1a3faa 60%, #3b63f0 100%);
+  position: relative; overflow: hidden; padding: 24px;
+}
+.authPage::before {
+  content: '⚡'; position: absolute; font-size: 600px; opacity: .03;
+  right: -100px; top: -100px; line-height: 1; pointer-events: none;
+}
+.authCard {
+  background: var(--surface); border-radius: 22px;
+  width: 100%; max-width: 420px; padding: 40px;
+  box-shadow: 0 24px 80px rgba(0,0,0,.25); position: relative; z-index: 1;
+}
+.authLogo { display: flex; flex-direction: column; align-items: center; margin-bottom: 28px; }
+.authLogoIcon {
+  width: 60px; height: 60px; border-radius: 16px;
+  background: var(--primary); color: #fff;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 26px; margin-bottom: 12px;
+  box-shadow: 0 8px 24px rgba(26,63,170,.35);
+}
+.authLogoName { font-family: 'Bricolage Grotesque', sans-serif; font-size: 24px; font-weight: 800; color: var(--text); letter-spacing: -.5px; }
+.authLogoSub { font-size: 12px; color: var(--muted); margin-top: 3px; text-align: center; }
+.authTitle { font-family: 'Bricolage Grotesque', sans-serif; font-size: 20px; font-weight: 700; color: var(--text); margin-bottom: 4px; }
+.authSub { font-size: 13px; color: var(--muted); margin-bottom: 24px; }
+.forgotRow { display: flex; justify-content: flex-end; margin-bottom: 18px; margin-top: -8px; }
+.forgotLink { font-size: 12.5px; color: var(--primary); font-weight: 500; }
+.forgotLink:hover { text-decoration: underline; }
+.authError { background: var(--danger-pale); color: var(--danger); border-radius: 8px; padding: 10px 14px; font-size: 13px; margin-bottom: 14px; }
+.authFooter { text-align: center; font-size: 13px; color: var(--muted2); margin-top: 20px; }
+.authLink { color: var(--primary); font-weight: 600; }
+.authLink:hover { text-decoration: underline; }
+.twoCol { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }

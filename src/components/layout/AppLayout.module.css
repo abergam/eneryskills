@@ -1,0 +1,63 @@
+.layout { display: flex; min-height: 100vh; }
+
+.sidebar {
+  width: var(--sidebar-w); flex-shrink: 0;
+  background: var(--primary);
+  display: flex; flex-direction: column;
+  position: fixed; left: 0; top: 0; height: 100vh;
+  z-index: 200; overflow-y: auto;
+}
+
+.brand {
+  padding: 22px 20px 18px;
+  border-bottom: 1px solid rgba(255,255,255,.1);
+}
+.brandPill {
+  display: inline-flex; align-items: center;
+  background: rgba(255,255,255,.12); border-radius: 20px;
+  padding: 3px 10px; font-size: 10px; letter-spacing: 1.5px;
+  text-transform: uppercase; color: rgba(255,255,255,.75);
+  margin-bottom: 10px; font-weight: 500;
+}
+.brandName {
+  font-family: 'Bricolage Grotesque', sans-serif;
+  font-size: 22px; font-weight: 800; color: #fff; letter-spacing: -.5px;
+}
+.brandSub { font-size: 11px; color: rgba(255,255,255,.45); margin-top: 5px; }
+
+.nav { padding: 14px 10px 6px; flex: 1; }
+.navLabel {
+  font-size: 10px; letter-spacing: 2px; text-transform: uppercase;
+  color: rgba(255,255,255,.35); padding: 0 8px 8px; font-weight: 600;
+}
+.navItem {
+  display: flex; align-items: center; gap: 10px;
+  padding: 9px 12px; border-radius: 10px; margin-bottom: 2px;
+  font-size: 13.5px; font-weight: 500; color: rgba(255,255,255,.6);
+  transition: all .18s;
+}
+.navItem:hover { color: rgba(255,255,255,.95); background: rgba(255,255,255,.1); }
+.navItem.active { color: #fff; background: rgba(255,255,255,.15); font-weight: 600; }
+.navIcon { width: 28px; height: 28px; display: flex; align-items: center; justify-content: center; font-size: 14px; flex-shrink: 0; background: rgba(255,255,255,.08); border-radius: 8px; transition: .18s; }
+.navItem.active .navIcon, .navItem:hover .navIcon { background: rgba(255,255,255,.18); }
+
+.sidebarFooter { padding: 16px; border-top: 1px solid rgba(255,255,255,.1); }
+.userRow { display: flex; align-items: center; gap: 10px; }
+.userAv {
+  width: 36px; height: 36px; border-radius: 10px; flex-shrink: 0;
+  background: rgba(255,255,255,.2); color: #fff;
+  font-weight: 700; font-size: 13px; display: flex;
+  align-items: center; justify-content: center;
+  font-family: 'Bricolage Grotesque', sans-serif;
+}
+.userName { font-size: 13px; font-weight: 600; color: #fff; }
+.userRole { font-size: 11px; color: rgba(255,255,255,.45); }
+.logoutBtn {
+  margin-left: auto; width: 30px; height: 30px; border-radius: 8px;
+  border: none; background: rgba(255,255,255,.08); color: rgba(255,255,255,.5);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 15px; transition: .18s;
+}
+.logoutBtn:hover { background: rgba(255,255,255,.2); color: #fff; }
+
+.main { margin-left: var(--sidebar-w); flex: 1; min-height: 100vh; }
