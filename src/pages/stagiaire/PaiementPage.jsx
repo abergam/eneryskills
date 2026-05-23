@@ -19,10 +19,13 @@ export default function PaiementPage() {
   useEffect(() => {
     stagiaireAPI.inscription(inscriptionId)
       .then(r => setInscription(r.data))
-      .catch(() => toast.error('Inscription introuvable.'))
-      .finally(() => setLoading(false))
-  }, [inscriptionId])
-
+      .catch((err) => {
+        console.error(err)
+        toast.error('Inscription introuvable.')
+        navigate('/formations')
+      })
+    .finally(() => setLoading(false))
+}, [inscriptionId])
   const initierPaiement = async () => {
     setInitiating(true)
     try {
