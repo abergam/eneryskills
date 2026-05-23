@@ -109,18 +109,17 @@ export const stagiaireAPI = {
   soumettre:      (tId, d) => api.post(`/tentatives/${tId}/soumettre/`, d),
 }
  
-export const paiementsAPI = {
-  initier:        (data)   => api.post('/paiements/initier/', data),
-  mesPaiements:   ()       => api.get('/paiements/mes-paiements/'),
-  dashboard:      ()       => api.get('/paiements/dashboard/'),
-  list:           (params) => api.get('/paiements/', { params }),
-  stripeCheckout: (data)   => api.post('/paiements/stripe/checkout/', data),
-}
- 
 export const certificatsAPI = {
   mesCertificats: ()       => api.get('/certificats/mes-certificats/'),
   verifier:       (token)  => api.get(`/certificats/verifier/${token}/`),
   generer:        (id)     => api.post(`/certificats/generer/${id}/`),
   telecharger:    (id)     => api.get(`/certificats/${id}/telecharger/`, { responseType: 'blob' }),
 }
- 
+export const paiementsAPI = {
+  initier:        (data)   => api.post('/paiements/initier/', data),
+  mesPaiements:   ()       => api.get('/paiements/mes-paiements/'),
+  dashboard:      ()       => api.get('/paiements/dashboard/'),
+  list:           (params) => api.get('/paiements/', { params }),
+  stripeCheckout: (data)   => api.post('/paiements/stripe/checkout/', data),
+  virement:       (data)   => api.post('/paiements/virement/', data),
+}
