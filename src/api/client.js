@@ -122,3 +122,10 @@ export const certificatsAPI = {
   generer:        (id)     => api.post(`/certificats/generer/${id}/`),
   telecharger:    (id)     => api.get(`/certificats/${id}/telecharger/`, { responseType: 'blob' }),
 }
+export const paiementsAPI = {
+  initier:        (data)   => api.post('/paiements/initier/', data),
+  mesPaiements:   ()       => api.get('/paiements/mes-paiements/'),
+  dashboard:      ()       => api.get('/paiements/dashboard/'),
+  list:           (params) => api.get('/paiements/', { params }),
+  stripeCheckout: (data)   => api.post('/paiements/stripe/checkout/', data),
+}

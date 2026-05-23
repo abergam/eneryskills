@@ -28,11 +28,20 @@ export default function PaiementPage() {
       const { data } = await paiementsAPI.initier({ inscription_id: inscriptionId })
       setCmiParams(data.cmi_params)
       toast('Redirection vers CMI...', { icon: '💳' })
-      // Soumettre automatiquement le formulaire CMI après 1s
       setTimeout(() => formRef.current?.submit(), 1000)
     } catch (err) {
       const msg = err.response?.data?.detail || 'Erreur lors de l\'initialisation du paiement.'
       toast.error(msg)
+    } finally { setInitiating(false) }
+  }
+
+  const initierPaiementStripe = async () => {
+    setInitiating(true)
+    try {
+      const { data } = await paiementsAPI.stripeCheckout({ inscription_id: inscriptionId })
+      window.location.href = data.checkout_url
+    } catch (err) {
+      toast.error('Erreur lors de l\'initialisation du paiement Stripe.')
     } finally { setInitiating(false) }
   }
 
@@ -74,7 +83,7 @@ export default function PaiementPage() {
           </div>
         </div>
 
-        {/* Bloc paiement CMI */}
+        {/* Bloc paiement */}
         <div className={styles.cmiCard}>
           <div className={styles.cmiHeader}>
             <div className={styles.cmiLogo}>CMI</div>
@@ -96,7 +105,6 @@ export default function PaiementPage() {
                 <Spinner size={20} />
                 <span>Redirection vers la page CMI en cours...</span>
               </div>
-              {/* Formulaire CMI caché - soumis automatiquement */}
               <form ref={formRef} method="POST" action={cmiParams.url} style={{ display:'none' }}>
                 {Object.entries(cmiParams).filter(([k]) => k !== 'url').map(([k, v]) => (
                   <input key={k} type="hidden" name={k} value={v} />
@@ -106,16 +114,35 @@ export default function PaiementPage() {
           ) : (
             <>
               <p className={styles.cmiInfo}>
-                Vous allez être redirigé vers la passerelle de paiement sécurisée CMI pour finaliser votre paiement de{' '}
+                Choisissez votre mode de paiement pour finaliser votre achat de{' '}
                 <strong>{parseFloat(formation?.prix_mad || 0).toLocaleString('fr-MA')} MAD</strong>.
               </p>
+
+              {/* Bouton CMI (Maroc) */}
               <Button
                 loading={initiating}
                 onClick={initierPaiement}
-                style={{ width:'100%', justifyContent:'center', padding:'13px', fontSize:15 }}
+                style={{ width:'100%', justifyContent:'center', padding:'13px', fontSize:15, marginBottom:12 }}
               >
-                💳 Payer maintenant
+                💳 Payer avec CMI (Maroc)
               </Button>
+
+              {/* Séparateur */}
+              <div style={{ display:'flex', alignItems:'center', gap:10, margin:'8px 0' }}>
+                <div style={{ flex:1, height:1, background:'#334155' }} />
+                <span style={{ color:'#64748B', fontSize:13 }}>ou</span>
+                <div style={{ flex:1, height:1, background:'#334155' }} />
+              </div>
+
+              {/* Bouton Stripe (International) */}
+              <Button
+                loading={initiating}
+                onClick={initierPaiementStripe}
+                style={{ width:'100%', justifyContent:'center', padding:'13px', fontSize:15, background:'#635BFF', marginBottom:12 }}
+              >
+                🌍 Payer avec Stripe (International)
+              </Button>
+
               <button className={styles.cancelBtn} onClick={() => navigate('/formations')}>
                 Annuler et revenir
               </button>
