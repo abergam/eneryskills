@@ -56,9 +56,10 @@ api.interceptors.response.use(
       }
  
       try {
-        const { data } = await axios.post('/api/auth/token/refresh/', {
-          refresh: refreshToken,
-        })
+      const { data } = await axios.post(
+        'https://electroform-backend-production.up.railway.app/api/auth/token/refresh/',
+        { refresh: refreshToken }
+      )
         useAuthStore.getState().updateToken(data.access)
         originalRequest.headers.Authorization = `Bearer ${data.access}`
         processQueue(null, data.access)
