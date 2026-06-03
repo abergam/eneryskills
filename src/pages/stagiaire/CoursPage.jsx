@@ -340,10 +340,12 @@ export default function CoursPage() {
 
             {/* ── Texte HTML riche ── */}
             {(contenuActif.type === 'texte' || contenuActif.texte_html) && (
-              <div
-                className="ef-content"
-                dangerouslySetInnerHTML={{ __html: contenuActif.texte_html || '<p>Contenu en cours de chargement...</p>' }}
-              />
+              <div style={{ maxWidth: 860, width: '100%' }}>
+                <div
+                  className="ef-content"
+                  dangerouslySetInnerHTML={{ __html: contenuActif.texte_html || '<p>Contenu en cours de chargement...</p>' }}
+                />
+              </div>
             )}
 
             {/* ── Aucun contenu disponible ── */}
