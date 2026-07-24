@@ -2,6 +2,7 @@ import { useEffect, useState, useCallback } from 'react'
 import { useParams, useNavigate } from 'react-router-dom'
 import { stagiaireAPI, formationsAPI } from '../../api/client'
 import { Button, Badge, ProgressBar, Spinner } from '../../components/ui/UI'
+import { useUIStore } from '../../context/uiStore'
 import toast from 'react-hot-toast'
 import styles from './Stagiaire.module.css'
 
@@ -165,6 +166,10 @@ export default function CoursPage() {
   const [contenuActif, setContenuActif]   = useState(null)
   const [loading, setLoading]             = useState(true)
   const [marking, setMarking]             = useState(false)
+  const { focusMode, toggleFocusMode, setFocusMode } = useUIStore()
+
+  // En quittant la page du cours, on revient toujours à l'affichage normal
+  useEffect(() => () => setFocusMode(false), [setFocusMode])
 
   useEffect(() => {
     const charger = async () => {
@@ -244,9 +249,12 @@ export default function CoursPage() {
   const nbFaits   = progression.filter(p => p.est_complete).length
 
   return (
-    <div className={styles.coursLayout}>
+    <div
+      className={styles.coursLayout}
+      style={focusMode ? { gridTemplateColumns: '0px 1fr' } : undefined}
+    >
       {/* ── Sidebar chapitres ── */}
-      <aside className={styles.coursSidebar}>
+      <aside className={styles.coursSidebar} style={focusMode ? { display: 'none' } : undefined}>
         <div style={{ marginBottom: 16 }}>
           <div style={{ fontFamily: 'Bricolage Grotesque', fontWeight: 800, fontSize: 15, color: 'var(--text)', marginBottom: 4 }}>
             {inscription.formation_detail?.titre}
@@ -293,11 +301,22 @@ export default function CoursPage() {
 
       {/* ── Contenu principal ── */}
       <main className={styles.coursMain}>
-        <div style={{ display: 'flex', alignItems: 'center', gap: 10, marginBottom: 20 }}>
-          <Button variant="ghost" size="sm" onClick={() => navigate('/formations')}>← Retour</Button>
+        <div style={{ display: 'flex', alignItems: 'center', gap: 10, marginBottom: 20, flexWrap: 'wrap' }}>
+          {!focusMode && (
+            <Button variant="ghost" size="sm" onClick={() => navigate('/formations')}>← Retour</Button>
+          )}
           <span style={{ fontSize: 12, color: 'var(--muted)' }}>
             Chapitre {chapActif?.numero} — {chapActif?.titre}
           </span>
+          <Button
+            variant="outline"
+            size="sm"
+            onClick={toggleFocusMode}
+            style={{ marginLeft: 'auto' }}
+            title={focusMode ? 'Réafficher les menus' : 'Masquer les menus pour agrandir la présentation'}
+          >
+            {focusMode ? '⤢ Réafficher les menus' : '⤡ Masquer les menus'}
+          </Button>
         </div>
 
         {contenuActif ? (

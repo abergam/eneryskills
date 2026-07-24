@@ -67,4 +67,5 @@
   min-width: 0;
   overflow: hidden;
   width: calc(100vw - var(--sidebar-w));
+  transition: margin-left .2s ease, width .2s ease;
 }

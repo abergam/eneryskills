@@ -1,6 +1,7 @@
 import { Outlet, NavLink, useNavigate } from 'react-router-dom'
 import { useAuthStore } from '../../context/authStore'
 import { useThemeStore } from '../../context/themeStore'
+import { useUIStore } from '../../context/uiStore'
 import { authAPI } from '../../api/client'
 import toast from 'react-hot-toast'
 import styles from './AppLayout.module.css'
@@ -24,6 +25,7 @@ const NAV_ADMIN = [
 export default function AppLayout() {
   const { user, refreshToken, logout, isAdmin } = useAuthStore()
   const { theme } = useThemeStore()
+  const { focusMode } = useUIStore()
   const navigate = useNavigate()
   const nav = isAdmin() ? NAV_ADMIN : NAV_STAGIAIRE
 
@@ -41,8 +43,8 @@ export default function AppLayout() {
   const initials = user ? (user.prenom?.[0] || '') + (user.nom?.[0] || '') : 'U'
 
   return (
-    <div className={styles.layout}>
-      <aside className={styles.sidebar}>
+    <div className={styles.layout} style={focusMode ? { '--sidebar-w': '0px' } : undefined}>
+      <aside className={styles.sidebar} style={focusMode ? { display: 'none' } : undefined}>
         <div className={styles.brand}>
           <span className={styles.brandPill}>⚡ {isAdmin() ? 'Admin' : 'Stagiaire'}</span>
           <div className={styles.brandName}>ElectroForm</div>
