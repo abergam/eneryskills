@@ -366,6 +366,7 @@ export default function CoursPage() {
                 <iframe
                   srcDoc={contenuActif.texte_html}
                   sandbox="allow-scripts allow-same-origin allow-forms allow-popups"
+                  allow="autoplay"
                   style={{ width: '100%', height: '80vh', border: 'none', display: 'block', background: '#fff' }}
                   title={contenuActif.titre}
                 />
