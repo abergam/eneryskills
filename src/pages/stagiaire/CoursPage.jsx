@@ -338,12 +338,24 @@ export default function CoursPage() {
               <BlocTelechargement contenu={contenuActif} />
             )}
 
-            {/* ── Texte HTML riche ── */}
-            {(contenuActif.type === 'texte' || contenuActif.texte_html) && (
+            {/* ── Document HTML autonome (export Lumio avec JS embarqué) ── */}
+            {contenuActif.texte_html && /<!doctype html|<html[\s>]/i.test(contenuActif.texte_html) && (
+              <div style={{ width: '100%', borderRadius: 12, overflow: 'hidden', border: '1px solid var(--border)', marginBottom: 20 }}>
+                <iframe
+                  srcDoc={contenuActif.texte_html}
+                  sandbox="allow-scripts allow-same-origin allow-forms allow-popups"
+                  style={{ width: '100%', height: '80vh', border: 'none', display: 'block', background: '#fff' }}
+                  title={contenuActif.titre}
+                />
+              </div>
+            )}
+
+            {/* ── Texte HTML riche (fragment simple, sans script) ── */}
+            {contenuActif.texte_html && !/<!doctype html|<html[\s>]/i.test(contenuActif.texte_html) && (
               <div style={{ maxWidth: 860, width: '100%' }}>
                 <div
                   className="ef-content"
-                  dangerouslySetInnerHTML={{ __html: contenuActif.texte_html || '<p>Contenu en cours de chargement...</p>' }}
+                  dangerouslySetInnerHTML={{ __html: contenuActif.texte_html }}
                 />
               </div>
             )}
