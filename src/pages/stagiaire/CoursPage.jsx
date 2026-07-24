@@ -254,7 +254,10 @@ export default function CoursPage() {
       style={focusMode ? { gridTemplateColumns: '0px 1fr' } : undefined}
     >
       {/* ── Sidebar chapitres ── */}
-      <aside className={styles.coursSidebar} style={focusMode ? { display: 'none' } : undefined}>
+      <aside
+        className={styles.coursSidebar}
+        style={focusMode ? { width: 0, minWidth: 0, padding: 0, border: 'none', overflow: 'hidden' } : undefined}
+      >
         <div style={{ marginBottom: 16 }}>
           <div style={{ fontFamily: 'Bricolage Grotesque', fontWeight: 800, fontSize: 15, color: 'var(--text)', marginBottom: 4 }}>
             {inscription.formation_detail?.titre}
