@@ -168,6 +168,12 @@ export default function CoursPage() {
   const [marking, setMarking]             = useState(false)
   const { focusMode, toggleFocusMode, setFocusMode } = useUIStore()
 
+  // La présentation (iframe avec audio) ne démarre qu'après un clic explicite
+  // du stagiaire — sert de geste utilisateur pour débloquer l'audio et évite
+  // qu'elle ne se lance automatiquement dès l'ouverture du contenu.
+  const [presentationLancee, setPresentationLancee] = useState(false)
+  useEffect(() => { setPresentationLancee(false) }, [contenuActif?.id])
+
   // En quittant la page du cours, on revient toujours à l'affichage normal
   useEffect(() => () => setFocusMode(false), [setFocusMode])
 
@@ -363,13 +369,38 @@ export default function CoursPage() {
             {/* ── Document HTML autonome (export Lumio avec JS embarqué) ── */}
             {contenuActif.texte_html && /<!doctype html|<html[\s>]/i.test(contenuActif.texte_html) && (
               <div style={{ width: '100%', borderRadius: 12, overflow: 'hidden', border: '1px solid var(--border)', marginBottom: 20 }}>
-                <iframe
-                  srcDoc={contenuActif.texte_html}
-                  sandbox="allow-scripts allow-same-origin allow-forms allow-popups"
-                  allow="autoplay"
-                  style={{ width: '100%', height: '80vh', border: 'none', display: 'block', background: '#fff' }}
-                  title={contenuActif.titre}
-                />
+                {presentationLancee ? (
+                  <iframe
+                    srcDoc={contenuActif.texte_html}
+                    sandbox="allow-scripts allow-same-origin allow-forms allow-popups"
+                    allow="autoplay"
+                    style={{ width: '100%', height: '80vh', border: 'none', display: 'block', background: '#fff' }}
+                    title={contenuActif.titre}
+                  />
+                ) : (
+                  <div
+                    onClick={() => setPresentationLancee(true)}
+                    style={{
+                      width: '100%', height: '80vh', display: 'flex', flexDirection: 'column',
+                      alignItems: 'center', justifyContent: 'center', gap: 16,
+                      background: 'var(--surface2)', cursor: 'pointer',
+                    }}
+                  >
+                    <div style={{
+                      width: 84, height: 84, borderRadius: '50%', background: 'var(--primary)',
+                      display: 'flex', alignItems: 'center', justifyContent: 'center',
+                      fontSize: 32, color: '#fff', boxShadow: '0 8px 24px rgba(0,0,0,.18)',
+                    }}>
+                      ▶
+                    </div>
+                    <div style={{ fontWeight: 700, fontSize: 16, color: 'var(--text)' }}>
+                      Lancer la présentation
+                    </div>
+                    <div style={{ fontSize: 13, color: 'var(--muted)' }}>
+                      {contenuActif.titre}
+                    </div>
+                  </div>
+                )}
               </div>
             )}
 
