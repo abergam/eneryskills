@@ -22,7 +22,7 @@ function QcmSimple({ question, reponses, answered, onChoisir }) {
             <span className={styles.optLetter}>{opt.lettre}</span>
             <span style={{ fontSize: 14 }}>{opt.texte}</span>
             {answered !== null && opt.est_correcte && (
-              <span style={{ marginLeft: 'auto', color: 'var(--success)', fontWeight: 700 }}>✓</span>
+              <span style={{ marginLeft: 'auto', color: 'var(--primary)', fontWeight: 700 }}>✓</span>
             )}
           </div>
         )
@@ -63,8 +63,8 @@ function QcmMultiple({ question, reponses, answered, onToggle }) {
             {/* Checkbox visuelle */}
             <span style={{
               width: 22, height: 22, borderRadius: 6, flexShrink: 0,
-              border: `2px solid ${isSelected && answered === null ? 'var(--primary)' : answered !== null && opt.est_correcte ? 'var(--success)' : answered !== null && isSelected ? 'var(--danger)' : 'var(--border2)'}`,
-              background: isSelected && answered === null ? 'var(--primary)' : answered !== null && opt.est_correcte ? 'var(--success)' : answered !== null && isSelected ? 'var(--danger)' : 'transparent',
+              border: `2px solid ${isSelected && answered === null ? 'var(--primary)' : answered !== null && opt.est_correcte ? 'var(--primary)' : answered !== null && isSelected ? 'var(--danger)' : 'var(--border2)'}`,
+              background: isSelected && answered === null ? 'var(--primary)' : answered !== null && opt.est_correcte ? 'var(--primary)' : answered !== null && isSelected ? 'var(--danger)' : 'transparent',
               display: 'flex', alignItems: 'center', justifyContent: 'center',
               color: '#fff', fontSize: 12, fontWeight: 700, transition: '.15s',
             }}>
@@ -72,7 +72,7 @@ function QcmMultiple({ question, reponses, answered, onToggle }) {
             </span>
             <span style={{ fontSize: 14 }}>{opt.texte}</span>
             {answered !== null && opt.est_correcte && !isSelected && (
-              <span style={{ marginLeft: 'auto', fontSize: 11, color: 'var(--success)', fontWeight: 600 }}>
+              <span style={{ marginLeft: 'auto', fontSize: 11, color: 'var(--primary)', fontWeight: 600 }}>
                 Bonne réponse manquée
               </span>
             )}
@@ -97,7 +97,7 @@ function VraiFaux({ question, reponses, answered, onChoisir }) {
         // Couleurs d'état
         let bg, border, color
         if (answered !== null) {
-          if (opt.est_correcte)              { bg = 'var(--success-pale)'; border = 'var(--success)'; color = '#065f46' }
+          if (opt.est_correcte)              { bg = 'var(--primary-pale)'; border = 'var(--primary)'; color = 'var(--primary)' }
           else if (isSelected)               { bg = 'var(--danger-pale)';  border = 'var(--danger)';  color = '#7f1d1d' }
           else                               { bg = 'var(--surface2)';     border = 'var(--border)';  color = 'var(--muted)' }
         } else if (isSelected) {
